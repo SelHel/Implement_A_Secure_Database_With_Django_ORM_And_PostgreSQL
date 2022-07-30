@@ -1,6 +1,15 @@
 from django.contrib import admin
 
-from .models import Contract
+from contracts.models import Contract
 
 
-admin.site.register(Contract)
+@admin.register(Contract)
+class ContractAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'sales_contact',
+        'client',
+        'is_signed',
+        'amount',
+        'payment_due'
+        )

@@ -3,6 +3,7 @@ from django.db import models
 from users.models import User
 from clients.models import Client
 
+
 class Contract(models.Model):
     sales_contact = models.ForeignKey(
         to=User,
@@ -16,6 +17,6 @@ class Contract(models.Model):
     is_signed = models.BooleanField(default=False)
     amount = models.FloatField()
     payment_due = models.DateTimeField()
-    
+
     def __str__(self):
         return f"{self.id} : {self.client.company_name} {self.created_on}"
