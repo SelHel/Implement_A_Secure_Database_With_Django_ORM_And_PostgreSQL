@@ -307,3 +307,5 @@ Temporary Items
 
 # Ignore code-workspaces
 *.code-workspace
+
+settings.ini

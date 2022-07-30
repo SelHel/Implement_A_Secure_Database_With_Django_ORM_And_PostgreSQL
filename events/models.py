@@ -7,11 +7,16 @@ from contracts.models import Contract
 
 class Event(models.Model):
     name = models.CharField(max_length=150)
-    client = models.ForeignKey(to=Client, on_delete=models.CASCADE)
-    contract = models.ForeignKey(to=Contract, on_delete=models.CASCADE)
+    client = models.ForeignKey(to=Client, on_delete=models.SET_NULL, null=True)
+    contract = models.ForeignKey(to=Contract, on_delete=models.SET_NULL, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    support_contact = models.ForeignKey(to=User,on_delete=models.SET_NULL, null=True)
+    support_contact = models.ForeignKey(
+        to=User, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        limit_choices_to={'role': User.SUPPORT}
+        )
     is_finished = models.BooleanField(default=False)
     attendees = models.IntegerField()
     event_date = models.DateTimeField()

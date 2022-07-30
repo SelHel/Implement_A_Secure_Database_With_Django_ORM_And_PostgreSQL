@@ -14,3 +14,4 @@ class User(AbstractUser):
         (SALES, 'sales')
         ]
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+    age = models.IntegerField(null=True, blank=True)
