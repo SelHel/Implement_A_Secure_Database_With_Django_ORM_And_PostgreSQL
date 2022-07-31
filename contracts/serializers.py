@@ -7,11 +7,11 @@ class ContractSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contract
-        fields = [
+        fields = (
             'id',
             'sales_contact',
             'client',
             'is_signed',
             'amount',
             'payment_due'
-        ]
+        )

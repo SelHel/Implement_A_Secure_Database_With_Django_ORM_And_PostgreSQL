@@ -1,6 +1,6 @@
 from django.db import models
 
-from users.models import User
+from users.models import Employee
 
 
 class Client(models.Model):
@@ -13,10 +13,10 @@ class Client(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     sales_contact = models.ForeignKey(
-      to=User,
+      to=Employee,
       on_delete=models.SET_NULL,
       null=True,
-      limit_choices_to={'role': User.SALES}
+      limit_choices_to={'role': Employee.SALES}
       )
 
     def __str__(self):

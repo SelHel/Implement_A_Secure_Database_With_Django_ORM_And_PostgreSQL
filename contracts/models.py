@@ -1,15 +1,15 @@
 from django.db import models
 
-from users.models import User
+from users.models import Employee
 from clients.models import Client
 
 
 class Contract(models.Model):
     sales_contact = models.ForeignKey(
-        to=User,
+        to=Employee,
         on_delete=models.SET_NULL,
         null=True,
-        limit_choices_to={'role': User.SALES}
+        limit_choices_to={'role': Employee.SALES}
         )
     client = models.ForeignKey(to=Client, on_delete=models.SET_NULL, null=True)
     created_on = models.DateTimeField(auto_now_add=True)

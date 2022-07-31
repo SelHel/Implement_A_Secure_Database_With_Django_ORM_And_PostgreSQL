@@ -1,15 +1,18 @@
 from django.contrib import admin
 
-from users.models import User
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+
+from users.models import Employee
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-        'role'
-        )
+class EmployeeInline(admin.StackedInline):
+    model = Employee
+
+
+class EmployeeAdmin(UserAdmin):
+    inlines = (EmployeeInline, )
+
+
+admin.site.unregister(User)
+admin.site.register(User, EmployeeAdmin)
