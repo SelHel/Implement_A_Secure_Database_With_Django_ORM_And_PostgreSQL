@@ -1,27 +1,37 @@
-# Implement a secure database with Django ORM and PostgreSQL
+# Mettre en œuvre une base de données sécurisée avec Django ORM et PostgreSQL
 ## Description
-**SoftDesk** est une API sécurisée RESTful permettant de remonter et suivre des problèmes techniques (issue tracking system).
 
-L'application permet essentiellement aux utilisateurs de créer divers projets, d'ajouter des collaborateurs à des projets spécifiques, de créer des problèmes au sein des projets et d'attribuer des libellés à ces problèmes en fonction de leurs priorités, de balises, etc ...
+**Epic Events** est une entreprise de conseil et de gestion dans l'événementiel qui souhaite développer un système CRM sécurisé interne à l'entreprise.<br>
+Ce logiciel doit permettre aux membres des différentes équipes (gestion, vente et support) de créer et de gérer leurs clients ainsi que les contrats et les évènements liés à ceux-ci.
 
-L'application exploite les points de terminaison d'API qui servent les données.
+Ma mission était d'élaborer un diagramme entité-relation (ERD) puis de développer une application devant fournir un ensemble d’endpoints sécurisés pour l’API à l'aide du framework Django REST et d'une base de données PostgreSQL.<br>
+
+L'interface utilisateur a été créée à l'aide du site d'administration Django, celle-ci permet aux utilisateurs autorisés d'effectuer différentes opérations CRUD (créer, lire, mettre à jour et supprimer) appliquées aux divers objets CRM.<br>
+## Diagramme ERD
+![alt tag](https://github.com/SelHel/Implement_A_Secure_Database_With_Django_ORM_And_PostgreSQL/files/9243575/Helaoui_Selim_1_ERD_072022.pdf)
 
 ## Documentation
 
 * Lien vers la documentation Postman de l'API, contenant des détails sur chaque point de terminaison : <https://documenter.getpostman.com/view/20587842/Uze1x4nZ>
 
 ## Prérequis
-* Python 3.9 ( lien de téléchargement: <https://www.python.org/downloads>)
+* Python 3.9 (lien de téléchargement: <https://www.python.org/downloads>)
+* PostgreSQL (lien de téléchargement: <https://www.postgresql.org/download>)
 
 ## Installation de l'application
 
-* Récupérer les livrables du projet sur votre poste de travail en téléchargant le dossier **OpenclassroomsProject10-main** depuis ce lien [GitHub](https://github.com/SelHel/OpenclassroomsProject10.git) ou en clonant le dépôt en utilisant le terminal sous Mac/Linux ou l'invite de commandes sous Windows :<br>
+* Cloner le dépôt en utilisant le terminal sous Mac/Linux ou l'invite de commandes sous Windows :<br>
 
 	```
-	git clone https://github.com/SelHel/OpenclassroomsProject10.git
+	git clone https://github.com/SelHel/Implement_A_Secure_Database_With_Django_ORM_And_PostgreSQL.git
 	```
 
-* Ensuite, placez vous dans le dossier "OpenclassroomsProject10" et créez un environnement virtuel :
+* Ensuite, placez vous dans le dossier courant :
+
+	```
+	cd Implement_A_Secure_Database_With_Django_ORM_And_PostgreSQL-master
+	```
+* Puis créez un environnement virtuel :
 
 	```
 	python -m venv <your-virtual-env-name>
