@@ -7,6 +7,7 @@ Ce logiciel doit permettre aux membres des différentes équipes (gestion, vente
 Ma mission était d'élaborer un diagramme entité-relation (ERD) puis de développer une application devant fournir un ensemble d’endpoints sécurisés pour l’API à l'aide du framework Django REST et d'une base de données PostgreSQL.<br>
 
 L'interface utilisateur a été créée à l'aide du site d'administration Django, celle-ci permet aux utilisateurs autorisés d'effectuer différentes opérations CRUD (créer, lire, mettre à jour et supprimer) appliquées aux divers objets CRM.<br>
+
 ## Diagramme ERD
 ![alt tag](https://github.com/SelHel/Implement_A_Secure_Database_With_Django_ORM_And_PostgreSQL/files/9243575/Helaoui_Selim_1_ERD_072022.pdf)
 
@@ -17,6 +18,15 @@ L'interface utilisateur a été créée à l'aide du site d'administration Djang
 ## Prérequis
 * Python 3.9 (lien de téléchargement: <https://www.python.org/downloads>)
 * PostgreSQL (lien de téléchargement: <https://www.postgresql.org/download>)
+
+## Base de données
+
+La base de données contient les tables suivantes :
+
+* Clients (stock les données des clients)
+* Contracts (stock les données des contrats liés aux clients)
+* Events (stock les données des évènements liés aux contrats)
+* Users (stock les données des utilisateurs)
 
 ## Installation de l'application
 
