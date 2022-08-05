@@ -1,17 +1,17 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
 from contracts.models import Contract
 
 
-class ContractSerializer(serializers.ModelSerializer):
+class ContractSerializer(ModelSerializer):
 
     class Meta:
         model = Contract
-        fields = (
+        fields = [
             'id',
             'sales_contact',
             'client',
             'is_signed',
             'amount',
             'payment_due'
-        )
+        ]

@@ -1,26 +1,26 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
 from users.models import Employee
 
 
-class EmployeeSerializer(serializers.ModelSerializer):
+class EmployeeSerializer(ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ('role')
+        fields = ['role']
 
 
-class UserSerializer(serializers.ModelSerializer):
-    employee = EmployeeSerializer(source='employee')
+class UserSerializer(ModelSerializer):
+    profile = EmployeeSerializer(source='employee')
 
     class Meta:
         model = User
-        fields = (
+        fields = [
             'id',
             'username',
-            'first_name'
+            'first_name',
             'last_name',
             'email',
-            'employee'
-        )
+            'profile'
+        ]

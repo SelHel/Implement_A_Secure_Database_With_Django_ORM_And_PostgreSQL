@@ -1,13 +1,13 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
 from clients.models import Client
 
 
-class ClientSerializer(serializers.ModelSerializer):
+class ClientSerializer(ModelSerializer):
 
     class Meta:
         model = Client
-        fields = (
+        fields = [
             'id',
             'first_name',
             'last_name',
@@ -16,4 +16,4 @@ class ClientSerializer(serializers.ModelSerializer):
             'mobile',
             'company_name',
             'sales_contact'
-        )
+        ]
