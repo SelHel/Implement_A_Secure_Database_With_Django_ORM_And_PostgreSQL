@@ -11,12 +11,16 @@ class Contract(models.Model):
         null=True,
         limit_choices_to={'role': Employee.SALES}
         )
-    client = models.ForeignKey(to=Client, on_delete=models.SET_NULL, null=True)
+    client = models.ForeignKey(
+        to=Client,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='contract')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     is_signed = models.BooleanField(default=False)
     amount = models.FloatField()
-    payment_due = models.DateTimeField()
+    payment_due = models.DateField()
 
     def __str__(self):
         return f"{self.id} : {self.client.company_name} {self.created_on}"

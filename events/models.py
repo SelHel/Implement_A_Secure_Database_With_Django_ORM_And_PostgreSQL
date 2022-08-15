@@ -7,7 +7,11 @@ from contracts.models import Contract
 
 class Event(models.Model):
     name = models.CharField(max_length=150)
-    client = models.ForeignKey(to=Client, on_delete=models.SET_NULL, null=True)
+    client = models.ForeignKey(
+        to=Client,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='event')
     contract = models.ForeignKey(
         to=Contract,
         on_delete=models.SET_NULL,

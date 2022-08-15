@@ -11,6 +11,8 @@ class ContractSerializer(ModelSerializer):
             'id',
             'sales_contact',
             'client',
+            'created_on',
+            'updated_on',
             'is_signed',
             'amount',
             'payment_due'
