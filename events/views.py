@@ -23,18 +23,13 @@ class EventViewset(ModelViewSet):
         ]
 
     def get_queryset(self):
-        return Event.objects.all()
-
-
-class MyEventsViewset(ModelViewSet):
-    serializer_class = EventSerializer
-    permission_classes = [IsAuthenticated, EventPermission]
-
-    def get_queryset(self):
         employee = self.request.user.employee
-        if employee.role == 'SUPPORT':
-            return Event.objects.filter(support_contact=employee)
-        elif employee.role == 'SALES':
+        if employee.role == 'SALES':
             return Event.objects.filter(contract__sales_contact=employee)
+        elif employee.role == 'SUPPORT':
+            return Event.objects.filter(support_contact=employee)
         else:
-            return []
+            return Event.objects.all()
+
+    def perform_create(self, serializer):
+        pass

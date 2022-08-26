@@ -12,7 +12,7 @@ class Event(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         related_name='event')
-    contract = models.ForeignKey(
+    contract = models.OneToOneField(
         to=Contract,
         on_delete=models.SET_NULL,
         null=True)

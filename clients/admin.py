@@ -15,3 +15,5 @@ class ClientAdmin(admin.ModelAdmin):
         'company_name',
         'sales_contact'
         )
+    search_fields = ('first_name', 'last_name', 'email', 'company_name')
+    list_filter = ('sales_contact',)
