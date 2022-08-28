@@ -10,12 +10,14 @@ class Event(models.Model):
     client = models.ForeignKey(
         to=Client,
         on_delete=models.SET_NULL,
-        null=True,
-        related_name='event')
+        null=True
+        )
     contract = models.OneToOneField(
         to=Contract,
         on_delete=models.SET_NULL,
-        null=True)
+        null=True,
+        related_name='event'
+        )
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     support_contact = models.ForeignKey(

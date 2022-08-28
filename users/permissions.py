@@ -6,6 +6,7 @@ class ClientPermission(BasePermission):
     """
     Un membre de l'équipe de gestion peut :
     - Afficher les informations de tous les clients
+
     Un membre de l'équipe de vente peut :
     - Créer des clients.
     - Mettre à jour les informations des clients qui lui sont attribués.
@@ -24,12 +25,14 @@ class ClientPermission(BasePermission):
             return True
         elif request.method == 'DELETE':
             return False
-        else:
-            return obj.sales_contact.user == request.user.employee
+        return obj.sales_contact.user == request.user
 
 
 class ContractPermision(BasePermission):
     """
+    Un membre de l'équipe de gestion peut :
+    - Afficher les informations de tous les clients
+
     Un membre de l'équipe de vente peut :
     - Créer des contrats pour les clients qui lui sont attribués.
     - Mettre à jour les informations des contrats non signés
@@ -43,12 +46,12 @@ class ContractPermision(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in SAFE_METHODS:
             return True
-        if request.method == 'DELETE':
+        elif request.method == 'DELETE':
             return False
         elif obj.is_signed is True:
             raise PermissionDenied("You cannot update a signed contract !")
         else:
-            return obj.sales_contact.user == request.user.employee
+            return obj.sales_contact.user == request.user
 
 
 class EventPermission(BasePermission):
@@ -65,19 +68,21 @@ class EventPermission(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
             return True
+        elif request.method == 'PUT':
+            return request.user.employee.role == 'SUPPORT'
         return request.user.employee.role == 'SALES'
 
     def has_object_permission(self, request, view, obj):
         if request.method in SAFE_METHODS:
             return True
-        if request.method == 'DELETE':
+        elif request.method == 'DELETE':
             return False
         elif obj.is_finished is True:
             raise PermissionDenied("You cannot update a finished event !")
         else:
             check = (
-                obj.support_contact.user == request.user.employee
+                obj.support_contact.user == request.user
                 ) or (
-                    obj.contract.sales_contact.user == request.user.employee
+                    obj.contract.sales_contact.user == request.user
                     )
             return check

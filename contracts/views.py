@@ -36,13 +36,17 @@ class ContractViewset(ModelViewSet):
             return Contract.objects.filter(sales_contact=employee)
         elif employee.role == 'SUPPORT':
             return Contract.objects.filter(event__support_contact=employee)
-        else:
+        elif employee.role == 'MANAGEMENT':
             return Contract.objects.all()
+        else:
+            return Contract.objects.none()
 
     def perform_create(self, serializer):
         employee = self.request.user.employee
-        clients = employee.clients.all()
+        clients = employee.client.all()
         client = get_object_or_404(Client, pk=self.request.data.get('client'))
         if client not in list(clients):
-            raise NotAcceptable('Ce client ne vous est pas attribué.')
-        serializer.save(client=client, sales_contact=employee)
+            raise NotAcceptable("You are not client's sales contact")
+        if employee.role == 'SALES':
+            serializer.save(client=client, sales_contact=employee)
+        serializer.save(client=client)

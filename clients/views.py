@@ -20,8 +20,10 @@ class ClientViewset(ModelViewSet):
             return Client.objects.filter(
                 contract__event__support_contact=employee
                 ).distinct()
-        else:
+        elif employee.role == 'MANAGEMENT':
             return Client.objects.all()
+        else:
+            return Client.objects.none()
 
     def perform_create(self, serializer):
         employee = self.request.user.employee

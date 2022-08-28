@@ -9,13 +9,14 @@ class Contract(models.Model):
         to=Employee,
         on_delete=models.SET_NULL,
         null=True,
-        limit_choices_to={'role': Employee.SALES}
+        limit_choices_to={'role': Employee.SALES},
+        related_name='contract'
         )
     client = models.ForeignKey(
         to=Client,
         on_delete=models.SET_NULL,
-        null=True,
-        related_name='contract')
+        null=True
+        )
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     is_signed = models.BooleanField(default=False)

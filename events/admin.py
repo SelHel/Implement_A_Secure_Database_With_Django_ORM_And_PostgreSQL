@@ -19,7 +19,7 @@ class EventForm(ModelForm):
 
     def save(self, commit=True):
         event = super().save(commit=False)
-        event.client = self.cleaned_data['contract'].client
+        event.client = event.contract.client
         if commit:
             event.save()
         return event

@@ -17,7 +17,7 @@ class Client(models.Model):
       on_delete=models.SET_NULL,
       null=True,
       limit_choices_to={'role': Employee.SALES},
-      related_name='clients'
+      related_name='client'
       )
 
     def __str__(self):
