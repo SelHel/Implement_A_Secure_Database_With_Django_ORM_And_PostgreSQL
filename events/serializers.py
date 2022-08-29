@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 
 from clients.serializers import ClientSerializer
+from users.serializers import EmployeeSerializer
 from events.models import Event
 from contracts.models import Contract
 
@@ -14,6 +15,7 @@ def get_event_serializer(user):
                 sales_contact=user,
                 is_signed=True)
             )
+        support_contact = EmployeeSerializer(read_only=True)
 
         class Meta:
             model = Event

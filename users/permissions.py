@@ -68,7 +68,7 @@ class EventPermission(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
             return True
-        elif request.method == 'PUT':
+        elif request.method in ('PUT', 'PATCH'):
             return request.user.employee.role == 'SUPPORT'
         return request.user.employee.role == 'SALES'
 
