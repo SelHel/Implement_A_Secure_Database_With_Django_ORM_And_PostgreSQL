@@ -1,25 +1,29 @@
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
+from rest_framework.serializers import (HyperlinkedModelSerializer,
+                                        PrimaryKeyRelatedField)
 
 from clients.serializers import ClientSerializer
-from users.serializers import EmployeeSerializer
 from events.models import Event
 from contracts.models import Contract
 
 
 def get_event_serializer(user):
 
-    class EventSerializer(ModelSerializer):
+    class EventSerializer(HyperlinkedModelSerializer):
         client = ClientSerializer(read_only=True)
         contract = PrimaryKeyRelatedField(
             queryset=Contract.objects.filter(
                 sales_contact=user,
                 is_signed=True)
             )
-        support_contact = EmployeeSerializer(read_only=True)
+        client = PrimaryKeyRelatedField(
+            queryset=Contract.objects.filter(
+                sales_contact=user)
+            )
 
         class Meta:
             model = Event
             fields = [
+                'url',
                 'id',
                 'name',
                 'client',

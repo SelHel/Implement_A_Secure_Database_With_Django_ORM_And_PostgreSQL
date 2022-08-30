@@ -1,15 +1,16 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import HyperlinkedModelSerializer
 
 from users.serializers import EmployeeSerializer
 from clients.models import Client
 
 
-class ClientSerializer(ModelSerializer):
+class ClientSerializer(HyperlinkedModelSerializer):
     sales_contact = EmployeeSerializer(read_only=True)
 
     class Meta:
         model = Client
         fields = [
+            'url',
             'id',
             'first_name',
             'last_name',

@@ -1,4 +1,4 @@
-from rest_framework.serializers import (ModelSerializer,
+from rest_framework.serializers import (HyperlinkedModelSerializer,
                                         PrimaryKeyRelatedField,
                                         SerializerMethodField)
 
@@ -10,7 +10,7 @@ from clients.models import Client
 
 def get_contract_serializer(user):
 
-    class ContractSerializer(ModelSerializer):
+    class ContractSerializer(HyperlinkedModelSerializer):
         sales_contact = EmployeeSerializer(read_only=True)
         client = PrimaryKeyRelatedField(
             queryset=Client.objects.filter(sales_contact=user)
@@ -20,6 +20,7 @@ def get_contract_serializer(user):
         class Meta:
             model = Contract
             fields = [
+                'url',
                 'id',
                 'sales_contact',
                 'client',

@@ -73,6 +73,8 @@ class EventPermission(BasePermission):
         return request.user.employee.role == 'SALES'
 
     def has_object_permission(self, request, view, obj):
+        print(obj.support_contact.user)
+        print(request.user)
         if request.method in SAFE_METHODS:
             return True
         elif request.method == 'DELETE':
