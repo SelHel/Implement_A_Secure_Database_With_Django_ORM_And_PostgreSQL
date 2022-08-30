@@ -1,6 +1,5 @@
 from rest_framework.serializers import (HyperlinkedModelSerializer,
-                                        PrimaryKeyRelatedField,
-                                        SerializerMethodField)
+                                        PrimaryKeyRelatedField)
 
 
 from users.serializers import EmployeeSerializer
@@ -15,7 +14,6 @@ def get_contract_serializer(user):
         client = PrimaryKeyRelatedField(
             queryset=Client.objects.filter(sales_contact=user)
             )
-        amount = SerializerMethodField('get_amount')
 
         class Meta:
             model = Contract
@@ -31,10 +29,10 @@ def get_contract_serializer(user):
                 'payment_due'
             ]
 
-        def get_amount(self, contract):
+        def to_representation(self, obj):
+            ret = super().to_representation(obj)
             if user.role == 'SUPPORT':
-                return "Non accessible"
-            else:
-                return contract.amount
+                ret['amount'] = 'Non accessible'
+            return ret
 
     return ContractSerializer
