@@ -5,7 +5,7 @@ from clients.models import Client
 
 
 class ClientSerializer(HyperlinkedModelSerializer):
-    sales_contact = EmployeeSerializer(read_only=True)
+    sales_contact = EmployeeSerializer(read_only=True).fields['url']
 
     class Meta:
         model = Client

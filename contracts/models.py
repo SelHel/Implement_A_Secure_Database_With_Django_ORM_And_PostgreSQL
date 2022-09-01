@@ -5,6 +5,7 @@ from clients.models import Client
 
 
 class Contract(models.Model):
+    name = models.CharField(max_length=150)
     sales_contact = models.ForeignKey(
         to=Employee,
         on_delete=models.SET_NULL,
@@ -24,4 +25,4 @@ class Contract(models.Model):
     payment_due = models.DateField()
 
     def __str__(self):
-        return f"{self.id} : {self.client.company_name} {self.created_on}"
+        return f"{self.name} : {self.client.company_name} {self.created_on}"

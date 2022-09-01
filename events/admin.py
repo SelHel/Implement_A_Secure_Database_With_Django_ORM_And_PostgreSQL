@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.forms import ModelForm
+from contracts.models import Contract
 
 from events.models import Event
 
@@ -41,3 +42,8 @@ class EventAdmin(admin.ModelAdmin):
     )
     search_fields = ('name', 'client__company_name')
     list_filter = ('contract', 'support_contact', 'is_finished')
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "contract":
+            kwargs["queryset"] = Contract.objects.filter(is_signed=True)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)

@@ -7,7 +7,7 @@ from contracts.models import Contract
 class ContractForm(ModelForm):
     class Meta:
         model = Contract
-        fields = ('client', 'is_signed', 'amount', 'payment_due')
+        fields = ('name', 'client', 'is_signed', 'amount', 'payment_due')
 
     def save(self, commit=True):
         contract = super().save(commit=False)
@@ -22,6 +22,7 @@ class ContractAdmin(admin.ModelAdmin):
     form = ContractForm
     list_display = (
         'id',
+        'name',
         'sales_contact',
         'client',
         'is_signed',

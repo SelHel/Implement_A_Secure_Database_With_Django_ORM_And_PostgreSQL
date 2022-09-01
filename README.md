@@ -1,12 +1,14 @@
 # Mettre en œuvre une base de données sécurisée avec Django ORM et PostgreSQL
 ## Description
 
-**Epic Events** est une entreprise de conseil et de gestion dans l'événementiel qui souhaite développer un système CRM sécurisé interne à l'entreprise.<br>
+**Epic Events** est une entreprise de conseil et de gestion dans l'évènementiel qui souhaite développer un système CRM sécurisé interne à l'entreprise.<br>
 Ce logiciel doit permettre aux membres des différentes équipes (gestion, vente et support) de créer et de gérer leurs clients ainsi que les contrats et les évènements liés à ceux-ci.
 
-Ma mission était d'élaborer un diagramme entité-relation (ERD) puis de développer une application devant fournir un ensemble d’endpoints sécurisés pour l’API à l'aide du framework Django REST et d'une base de données PostgreSQL.<br>
+Ma mission était d'élaborer un diagramme entité-relation (ERD) puis de développer l’application Django correspondante avec une base de données PostgreSQL.
 
-L'interface utilisateur a été créée à l'aide du site d'administration Django, celle-ci permet aux utilisateurs autorisés d'effectuer différentes opérations CRUD (créer, lire, mettre à jour et supprimer) appliquées aux divers objets CRM.<br>
+Cette application fournit un ensemble d’endpoints sécurisés pour l’API qui permettent aux utilisateurs autorisés de créer, d’afficher et de modifier leurs clients ainsi que les contrats et les évènements liés à ceux-ci.
+
+L’interface front-end a été créée à l’aide du site d’administration de Django et permet aux utilisateurs autorisés d’accéder à l’ensemble de la base de données et d’effectuer les opérations CRUD.
 
 ## Diagramme ERD
 ![alt tag](https://github.com/SelHel/Implement_A_Secure_Database_With_Django_ORM_And_PostgreSQL/files/9243575/Helaoui_Selim_1_ERD_072022.pdf)

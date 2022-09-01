@@ -7,11 +7,11 @@ from rest_framework.permissions import IsAuthenticated
 from contracts.models import Contract
 from clients.models import Client
 from contracts.serializers import get_contract_serializer
-from users.permissions import ContractPermision
+from users.permissions import IsManagement, ContractPermision
 
 
 class ContractViewset(ModelViewSet):
-    permission_classes = [IsAuthenticated, ContractPermision]
+    permission_classes = [IsAuthenticated, IsManagement, ContractPermision]
     filterset_fields = [
         'created_on',
         'amount',

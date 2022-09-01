@@ -7,11 +7,11 @@ from rest_framework.permissions import IsAuthenticated
 from events.models import Event
 from events.serializers import get_event_serializer
 from contracts.models import Contract
-from users.permissions import EventPermission
+from users.permissions import IsManagement, EventPermission
 
 
 class EventViewset(ModelViewSet):
-    permission_classes = [IsAuthenticated, EventPermission]
+    permission_classes = [IsAuthenticated, IsManagement, EventPermission]
     filterset_fields = [
         'event_date',
         'client__company_name',
@@ -26,7 +26,7 @@ class EventViewset(ModelViewSet):
         ]
 
     def get_serializer_class(self):
-        return get_event_serializer(self.request.user.employee)
+        return get_event_serializer(self.request.user.employee, self.request.method)
 
     def get_queryset(self):
         employee = self.request.user.employee
@@ -52,5 +52,7 @@ class EventViewset(ModelViewSet):
             raise NotAcceptable(
                 "You cannot create an event for an unsigned contract"
                 )
-
-        serializer.save(contract=contract, client=contract.client)
+        try:
+            serializer.save(contract=contract, client=contract.client)
+        except Exception as e:
+            raise NotAcceptable(str(e))

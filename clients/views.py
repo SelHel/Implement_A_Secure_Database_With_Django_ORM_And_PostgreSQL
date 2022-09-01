@@ -3,12 +3,12 @@ from rest_framework.permissions import IsAuthenticated
 
 from clients.models import Client
 from clients.serializers import ClientSerializer
-from users.permissions import ClientPermission
+from users.permissions import IsManagement, ClientPermission
 
 
 class ClientViewset(ModelViewSet):
     serializer_class = ClientSerializer
-    permission_classes = [IsAuthenticated, ClientPermission]
+    permission_classes = [IsAuthenticated, IsManagement, ClientPermission]
     filterset_fields = ['company_name', 'email']
     search_fields = ['company_name', 'email']
 

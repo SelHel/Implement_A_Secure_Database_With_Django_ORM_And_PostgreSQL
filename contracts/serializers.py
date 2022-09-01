@@ -10,7 +10,7 @@ from clients.models import Client
 def get_contract_serializer(user):
 
     class ContractSerializer(HyperlinkedModelSerializer):
-        sales_contact = EmployeeSerializer(read_only=True)
+        sales_contact = EmployeeSerializer(read_only=True).fields['url']
         client = PrimaryKeyRelatedField(
             queryset=Client.objects.filter(sales_contact=user)
             )
@@ -20,6 +20,7 @@ def get_contract_serializer(user):
             fields = [
                 'url',
                 'id',
+                'name',
                 'sales_contact',
                 'client',
                 'created_on',
@@ -32,7 +33,7 @@ def get_contract_serializer(user):
         def to_representation(self, obj):
             ret = super().to_representation(obj)
             if user.role == 'SUPPORT':
-                ret['amount'] = 'Non accessible'
+                ret['amount'] = 'Not available'
             return ret
 
     return ContractSerializer

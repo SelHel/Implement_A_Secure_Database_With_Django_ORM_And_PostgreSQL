@@ -1,14 +1,14 @@
 from django.contrib.auth.models import User
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer
 
 from users.models import Employee
 
 
-class EmployeeSerializer(ModelSerializer):
+class EmployeeSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ['role']
+        fields = ['url', 'role']
 
 
 class UserSerializer(ModelSerializer):
