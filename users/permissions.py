@@ -1,4 +1,3 @@
-import re
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.exceptions import PermissionDenied
 
@@ -17,6 +16,21 @@ class IsManagement(BasePermission):
 
 class ClientPermission(BasePermission):
     def has_permission(self, request, view):
+        pk = view.kwargs.get('pk')
+        try:
+            if pk is not None:
+                client = Client.objects.get(id=view.kwargs['pk'])
+                employee = request.user.employee
+                if employee.role == 'SALES':
+                    if client.sales_contact != employee:
+                        return False
+                elif employee.role == "SUPPORT":
+                    clients = Client.objects.filter(contract__event__support_contact=employee).distinct()
+                    if client not in clients:
+                        return False
+        except:
+            return False
+
         if request.user.employee.role == 'SUPPORT':
             return request.method in SAFE_METHODS
         return request.user.employee.role == 'SALES'
@@ -24,35 +38,32 @@ class ClientPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method == 'DELETE':
             return False
-        elif request.user.employee.role == 'SUPPORT' and request.method in SAFE_METHODS:
-            return obj in Client.objects.filter(
-                contract__event__support_contact=request.user.employee
-                ).distinct()
+        elif request.method in SAFE_METHODS:
+            return True
         elif request.user.employee.role == 'SALES':
-            return obj in Client.objects.filter(
-                sales_contact=request.user.employee
-                )
-        else:
-            return False
+            return obj.sales_contact == request.user.employee
+        return False
 
 
 class ContractPermision(BasePermission):
     def has_permission(self, request, view):
         pk = view.kwargs.get('pk')
-        if pk is not None:            
-            contract = Contract.objects.get(id=view.kwargs['pk'])
-            employee = request.user.employee
-            if employee.role == 'SALES':
-                if contract.sales_contact != employee:
-                    return False
-
-            elif employee.role == "SUPPORT":
-                try:
-                    event = contract.event
-                    if event.support_contact != employee:
+        try:
+            if pk is not None:
+                contract = Contract.objects.get(id=view.kwargs['pk'])
+                employee = request.user.employee
+                if employee.role == 'SALES':
+                    if contract.sales_contact != employee:
                         return False
-                except:
-                    return False
+                elif employee.role == "SUPPORT":
+                    try:
+                        event = contract.event
+                        if event.support_contact != employee:
+                            return False
+                    except:
+                        return False
+        except:
+            return False
 
         if request.user.employee.role == 'SUPPORT':
             return request.method in SAFE_METHODS
@@ -72,6 +83,20 @@ class ContractPermision(BasePermission):
 
 class EventPermission(BasePermission):
     def has_permission(self, request, view):
+        pk = view.kwargs.get('pk')
+        try:
+            if pk is not None:
+                event = Event.objects.get(id=view.kwargs['pk'])
+                employee = request.user.employee
+                if employee.role == 'SALES':
+                    if event.contract.sales_contact != employee:
+                        return False
+                elif employee.role == "SUPPORT":
+                    if event.support_contact != employee:
+                        return False
+        except:
+            return False
+
         if request.user.employee.role == 'SUPPORT':
             return request.method in ['GET', 'PUT', 'PATCH']
         return request.user.employee.role == 'SALES'
@@ -79,15 +104,12 @@ class EventPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method == 'DELETE':
             return False
-        elif request.method in ['PUT', 'PATCH'] and obj.is_finished is True:
+        elif request.method in SAFE_METHODS:
+            return True
+        elif obj.is_finished is True:
             raise PermissionDenied("You cannot update a finished event !")
         elif request.user.employee.role == 'SUPPORT':
-            return obj in Event.objects.filter(
-                support_contact=request.user.employee
-                )
+            return obj.support_contact == request.user.employee
         elif request.user.employee.role == 'SALES':
-            return obj in Event.objects.filter(
-                contract__sales_contact=request.user.employee
-                )
-        else:
-            return False
+            return obj.contract.sales_contact == request.user.employee
+        return False
