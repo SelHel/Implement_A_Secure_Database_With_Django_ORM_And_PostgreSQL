@@ -11,7 +11,7 @@ from users.permissions import IsManagement, ContractPermision
 
 
 class ContractViewset(ModelViewSet):
-    permission_classes = [IsAuthenticated, IsManagement, ContractPermision]
+    permission_classes = [IsAuthenticated, IsManagement | ContractPermision]
     filterset_fields = [
         'created_on',
         'amount',

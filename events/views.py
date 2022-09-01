@@ -11,7 +11,7 @@ from users.permissions import IsManagement, EventPermission
 
 
 class EventViewset(ModelViewSet):
-    permission_classes = [IsAuthenticated, IsManagement, EventPermission]
+    permission_classes = [IsAuthenticated, IsManagement | EventPermission]
     filterset_fields = [
         'event_date',
         'client__company_name',

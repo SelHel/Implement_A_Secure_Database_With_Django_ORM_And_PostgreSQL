@@ -8,7 +8,7 @@ from users.permissions import IsManagement, ClientPermission
 
 class ClientViewset(ModelViewSet):
     serializer_class = ClientSerializer
-    permission_classes = [IsAuthenticated, IsManagement, ClientPermission]
+    permission_classes = [IsAuthenticated, IsManagement | ClientPermission]
     filterset_fields = ['company_name', 'email']
     search_fields = ['company_name', 'email']
 
